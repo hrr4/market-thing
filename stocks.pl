@@ -6,7 +6,7 @@ use Data::Dumper;
 
 my $q = Finance::Quote->new;
 $q->set_currency("USD");
-$q->require_labels(qw/price date time high low volume/);
+$q->require_labels(qw/price date time high low p_change/);
 
 sub Get_Quote {
     return $q->fetch("nasdaq", @_);
@@ -15,13 +15,14 @@ sub Get_Quote {
 my @stocks = ("NXPI");
 my %quotes = Get_Quote(@stocks);
 
-#print Dumper(\%quote);
+#print Dumper(\%quotes);
 
 # What do we want out of this?
 foreach my $stock (@stocks) {
-    my $test = "$stock" . "_price";
+    my $price = $quotes{$stock, "price"};
+    my $pchange = $quotes{$stock, "p_change"};
+    my $date = $quotes{$stock, "date"};
+    my $time = $quotes{$stock, "time"};
 
-    my $price = $quotes{$test};
-
-    print qq($stock\n\tPrice: $price\n);
+    print qq($stock\n\tPrice: $price\n\t%Change: $pchange\n\tDateTime: $time, $date\n);
 }
