@@ -1,0 +1,8 @@
+use Finance::Quote;
+use LWP::UserAgent;
+
+$q = Finance::Quote->new;
+$q->set_currency("USD");
+$q->require_label(qw/price date high low volume/);
+
+%quotes = $q->fetch("nasdaq", );
