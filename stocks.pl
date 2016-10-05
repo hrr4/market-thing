@@ -4,18 +4,24 @@ use Finance::Quote;
 use LWP::UserAgent;
 use Data::Dumper;
 
+my @stocks = ("NXPI", "DIS");
+
+if ($#ARGV >= 0) {
+    @stocks = @ARGV;
+}
+
 my $q = Finance::Quote->new;
 $q->set_currency("USD");
 $q->require_labels(qw/price date time high low p_change/);
 
+
 sub Get_Quote {
-    return $q->fetch("nasdaq", @_);
+    return $q->fetch("nyse", @_);
 }
 
-my @stocks = ("NXPI");
 my %quotes = Get_Quote(@stocks);
 
-#print Dumper(\%quotes);
+print Dumper(\%quotes);
 
 # What do we want out of this?
 foreach my $stock (@stocks) {
